@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CadastrarModule } from './cadastrar.module';
+import { CadastrarModel } from './model/cadastrar.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class CadastrarService {
     return this.http.get<Array<any>>('https://localhost:44336/api/inventarioservidor/responsabilidade');
   }
 
-  criar(cadastro:CadastrarModule) {
+  criar(cadastro: CadastrarModel) {
     return this.http.post(this.cadastrosUrl, cadastro);
   }
 

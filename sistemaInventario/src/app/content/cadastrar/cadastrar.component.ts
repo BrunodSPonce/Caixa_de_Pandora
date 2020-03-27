@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
-import { MethodService } from 'src/app/services/method.service';
 import { Servidor } from 'src/app/model/servidor.model';
+import { CadastrarService } from './cadastrar.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -22,7 +22,7 @@ export class CadastrarComponent implements OnInit {
   responsaveis:Array<any>;
   sistemasoperacionais:Array<any>;
 
-  constructor(private service: MethodService, private http: HttpClient){}
+  constructor(private service: CadastrarService, private http: HttpClient){}
 
   ngOnInit() {
     this.cadastro = {};
@@ -54,15 +54,15 @@ export class CadastrarComponent implements OnInit {
     this.service.listarSistemaOperacional()
     .subscribe(sistemasoperacionais => this.sistemasoperacionais = sistemasoperacionais);
 
-    }
+  }
 
-  criar(frm: FormGroup) {
+  criar() {
     this.service.criar(this.cadastro).subscribe();
   }
 
   
   listarServidores() : any{
-    this.service.listarServidores().subscribe(servidores => {
+    this.service.listar().subscribe(servidores => {
       this.cadastros = servidores;
     }, err =>{
       console.log('Erro ao carregar lista de servidores', err);

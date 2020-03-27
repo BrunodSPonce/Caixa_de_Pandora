@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class InventarioServidorController : ControllerBase
     {
         List<Servidor> servidores = new List<Servidor>();
@@ -203,25 +205,29 @@ namespace Api.Controllers
                     "@tipoServidor, @espacoDisco, @cpu, @memoria, @conteudo, @ambienteID, @categoriaBackupID, @datacenterID, @finalidadeID, @responsabilidadeID," +
                     " @sistemaOperacionalID)", connection))
                 {
-                   
-                    command.Parameters.Add(new SqlParameter("ip", servidor.IP));
-                    command.Parameters.Add(new SqlParameter("hostname", servidor.Hostname));
-                    command.Parameters.Add(new SqlParameter("observacao", servidor.Observacao));
-                    command.Parameters.Add(new SqlParameter("status", servidor.Status));
-                    command.Parameters.Add(new SqlParameter("tipoServidor", servidor.TipoServidor));
-                    command.Parameters.Add(new SqlParameter("espacoDisco", servidor.EspacoDisco));
-                    command.Parameters.Add(new SqlParameter("cpu", servidor.Cpu));
-                    command.Parameters.Add(new SqlParameter("memoria", servidor.Memoria));
-                    command.Parameters.Add(new SqlParameter("conteudo", servidor.Conteudo));
-                    command.Parameters.Add(new SqlParameter("ambienteID", HttpPegarIDAmbiente(servidor.NomeAmbiente)));
-                    command.Parameters.Add(new SqlParameter("categoriaBackupID", HttpPegarIDBackup(servidor.NomeCategoriaBackup, servidor.Descricao)));
-                    command.Parameters.Add(new SqlParameter("datacenterID", HttpPegarIDDataCenter(servidor.NomeDataCenter)));
-                    command.Parameters.Add(new SqlParameter("finalidadeID", HttpPegarIDFinalidade(servidor.NomeFinalidade)));
-                    command.Parameters.Add(new SqlParameter("responsabilidadeID", HttpPegarIDResponsabildiade(servidor.NomeResponsabilidade)));
-                    command.Parameters.Add(new SqlParameter("sistemaOperacionalID", HttpPegarIDSistemaOperacional(servidor.NomeSistemaOperacional, servidor.Versao,
-                        servidor.Distribuicao)));
-                    command.ExecuteNonQuery();
-
+                    try
+                    {
+                        command.Parameters.Add(new SqlParameter("ip", servidor.IP));
+                        command.Parameters.Add(new SqlParameter("hostname", servidor.Hostname));
+                        command.Parameters.Add(new SqlParameter("observacao", servidor.Observacao));
+                        command.Parameters.Add(new SqlParameter("status", servidor.Status));
+                        command.Parameters.Add(new SqlParameter("tipoServidor", servidor.TipoServidor));
+                        command.Parameters.Add(new SqlParameter("espacoDisco", servidor.EspacoDisco));
+                        command.Parameters.Add(new SqlParameter("cpu", servidor.Cpu));
+                        command.Parameters.Add(new SqlParameter("memoria", servidor.Memoria));
+                        command.Parameters.Add(new SqlParameter("conteudo", servidor.Conteudo));
+                        command.Parameters.Add(new SqlParameter("ambienteID", servidor.AmbienteID));
+                        command.Parameters.Add(new SqlParameter("categoriaBackupID", servidor.CategoriaBackupID));
+                        command.Parameters.Add(new SqlParameter("datacenterID", servidor.DatacenterID));
+                        command.Parameters.Add(new SqlParameter("finalidadeID", servidor.FinalidadeID));
+                        command.Parameters.Add(new SqlParameter("responsabilidadeID", servidor.ResponsabilidadeID));
+                        command.Parameters.Add(new SqlParameter("sistemaOperacionalID", servidor.SistemaOperacionalID));
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException)
+                    {
+                        throw new Exception("Não foi possível encontrar o servidor");
+                    }
                 }
             }
         }
@@ -287,6 +293,7 @@ namespace Api.Controllers
                 }
             }
         }
+
         [HttpGet]
         [Route("datacenter")]
         public List<DataCenter> HttpPegarTodosDataCenter()
@@ -320,6 +327,7 @@ namespace Api.Controllers
                 }
             }
         }
+
         [HttpGet]
         [Route("sistemaoperacional")]
         public List<SistemaOperacional> HttpPegarTodosSistemaOperacional()
@@ -355,6 +363,7 @@ namespace Api.Controllers
                 }
             }
         }
+
         [HttpGet]
         [Route("backup")]
         public List<CategoriaBackup> HttpPegarTodosBackup()
@@ -389,6 +398,7 @@ namespace Api.Controllers
                 }
             }
         }
+
         [HttpGet]
         [Route("responsabilidade")]
         public List<Responsabilidade> HttpPegarTodasResponsabilidades()
@@ -422,6 +432,7 @@ namespace Api.Controllers
                 }
             }
         }
+
         [HttpGet]
         [Route("finalidade")]
         public List<Finalidade> HttpPegarTodasFinalidades()
@@ -455,6 +466,7 @@ namespace Api.Controllers
                 }
             }
         }
+
         [HttpGet]
         [Route("ambiente")]
         public List<Ambiente> HttpPegarTodosAmbientes()
@@ -485,193 +497,6 @@ namespace Api.Controllers
                         connection.Close();
                         throw new Exception("Nenhum ambiente encontrado, entre em contato com o administrador");
                     }
-                }
-            }
-        }
-        public int HttpPegarIDAmbiente(string nomeAmbiente)
-        {
-            //var connectionString = "Server=172.20.1.50;Database=SistemaInventarioDev;User Id=uniteste;Password=devteste;";
-            var connectionString = "Server=tcp:unidas.database.windows.net,1433;Initial Catalog=SistemaInventarioDev;Persist Security Info=False;User ID=estagio;Password=Unidas@20;";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Ambiente WHERE NomeAmbiente = @nomeAmbiente", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("nomeAmbiente", nomeAmbiente));
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int ambienteID = reader.GetInt32(0);
-                        if (ambienteID > 0)
-                        {
-                            connection.Close();
-                            return ambienteID;
-                        }
-                        else
-                        {
-                            connection.Close();
-                            throw new Exception("Nenhum ambiente encontrado, entre em contato com o administrador");
-                        }
-                    }
-                    return 0;
-                }
-            }
-        }
-        public int HttpPegarIDFinalidade(string nomeFinalidade)
-        {
-            //var connectionString = "Server=172.20.1.50;Database=SistemaInventarioDev;User Id=uniteste;Password=devteste;";
-            var connectionString = "Server=tcp:unidas.database.windows.net,1433;Initial Catalog=SistemaInventarioDev;Persist Security Info=False;User ID=estagio;Password=Unidas@20;";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Finalidade WHERE NomeFinalidade = @nomeFinalidade", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("nomeFinalidade", nomeFinalidade));
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int finalidadeID = reader.GetInt32(0);
-                        if (finalidadeID > 0)
-                        {
-                            connection.Close();
-                            return finalidadeID;
-                        }
-                        else
-                        {
-                            connection.Close();
-                            throw new Exception("Nenhuma finalidade encontrado, entre em contato com o administrador");
-                        }
-                    }
-                    return 0;
-                }
-            }
-        }
-        public int HttpPegarIDResponsabildiade(string nomeResponsabildiade)
-        {
-            //var connectionString = "Server=172.20.1.50;Database=SistemaInventarioDev;User Id=uniteste;Password=devteste;";
-            var connectionString = "Server=tcp:unidas.database.windows.net,1433;Initial Catalog=SistemaInventarioDev;Persist Security Info=False;User ID=estagio;Password=Unidas@20;";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Responsabilidade WHERE NomeResponsabildiade = @nomeResponsabildiade", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("nomeResponsabildiade", nomeResponsabildiade));
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int responsabilidadeID = reader.GetInt32(0);
-                        if (responsabilidadeID > 0)
-                        {
-                            connection.Close();
-                            return responsabilidadeID;
-                        }
-                        else
-                        {
-                            connection.Close();
-                            throw new Exception("Nenhum ambiente encontrado, entre em contato com o administrador");
-                        }
-                    }
-                    return 0;
-                }
-            }
-        }
-        public int HttpPegarIDDataCenter(string nomeDataCenter)
-        {
-            //var connectionString = "Server=172.20.1.50;Database=SistemaInventarioDev;User Id=uniteste;Password=devteste;";
-            var connectionString = "Server=tcp:unidas.database.windows.net,1433;Initial Catalog=SistemaInventarioDev;Persist Security Info=False;User ID=estagio;Password=Unidas@20;";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM DataCenter WHERE NomeDataCenter = @nomeDataCenter", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("nomeDataCenter", nomeDataCenter));
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        
-
-                        int dataCenterID = reader.GetInt32(0);
-                        if (dataCenterID > 0)
-                        {
-                            connection.Close();
-                            return dataCenterID;
-                        }
-                        else
-                        {
-                            connection.Close();
-                            throw new Exception("Nenhum ambiente encontrado, entre em contato com o administrador");
-                        }
-                    }
-                    return 0;
-                }
-            }
-        }
-        public int HttpPegarIDSistemaOperacional(string nomeSistemaOperacional, string versao, string distribuicao)
-        {
-            //var connectionString = "Server=172.20.1.50;Database=SistemaInventarioDev;User Id=uniteste;Password=devteste;";
-            var connectionString = "Server=tcp:unidas.database.windows.net,1433;Initial Catalog=SistemaInventarioDev;Persist Security Info=False;User ID=estagio;Password=Unidas@20;";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM SistemaOperacional WHERE NomeSistemaOperacional = @nomeSistemaOperacion AND Versao = @versao " +
-                    "AND Distribuicao = @distribuicao", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("nomeSistemaOperacion", nomeSistemaOperacional));
-                    command.Parameters.Add(new SqlParameter("versao", versao));
-                    command.Parameters.Add(new SqlParameter("distribuicao", distribuicao));
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int dataCenterID = reader.GetInt32(0);
-                        if (dataCenterID > 0)
-                        {
-                            connection.Close();
-                            return dataCenterID;
-                        }
-                        else
-                        {
-                            connection.Close();
-                            throw new Exception("Nenhum ambiente encontrado, entre em contato com o administrador");
-                        }
-                    }
-                    return 0;
-                }
-            }
-        }
-        public int HttpPegarIDBackup(string tipobackup, string descricaobackup)
-        {
-            //var connectionString = "Server=172.20.1.50;Database=SistemaInventarioDev;User Id=uniteste;Password=devteste;";
-            var connectionString = "Server=tcp:unidas.database.windows.net,1433;Initial Catalog=SistemaInventarioDev;Persist Security Info=False;User ID=estagio;Password=Unidas@20;";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM CategoriaBackup WHERE NomeCategoriaBackup = @nomeBackup AND Descricao = @descricao", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("nomeBackup", tipobackup));
-                    command.Parameters.Add(new SqlParameter("descricao", descricaobackup));
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int BackupID = reader.GetInt32(0);
-                        if (BackupID > 0)
-                        {
-                            connection.Close();
-                            return BackupID;
-                        }
-                        else
-                        {
-                            connection.Close();
-                            throw new Exception("Nenhum ambiente encontrado, entre em contato com o administrador");
-                        }
-                    }
-                    return 0;
                 }
             }
         }

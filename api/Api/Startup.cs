@@ -34,23 +34,23 @@ namespace Api
         {
             //CONEXAO COM BANCO EM MEMORIA
             services.AddDbContext<SistemaInventarioContext>(opt => opt.UseInMemoryDatabase("SistemaInventario"));
-            services.AddControllers();
             services.AddControllers().AddNewtonsoftJson();
             services.AddScoped<UsuarioRepository, UsuarioRepositoryImpl>();
 
             //HABILITA O CORS
             services.AddCors(options => 
             {
+                
                 options.AddPolicy(MyAllowSpecificOrigins,
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:4200")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                    });
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             //HABILITA A AUTENTICACAO A PARTIR DO TOKEN
             var key = Encoding.ASCII.GetBytes(PrivateKey.Secret);
@@ -95,20 +95,7 @@ namespace Api
                 endpoints.MapControllers();
             });
 
-            /*var context = app.ApplicationServices.GetService<SistemaInventarioContext>();
-            IncluirDados(context);*/
+            
         }
-
-        /*private void IncluirDados(SistemaInventarioContext context)
-        {
-            var user1 = new Usuario
-            {
-                Id = "1",
-                Login = "Admin",
-                Senha = "1234"
-            };
-            context.Usuarios.Add(user1);
-            context.SaveChanges();
-        }*/
     }
 }

@@ -25,7 +25,6 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
 import { EditarComponent } from './content/editar/editar.component';
 import { HomeService } from './content/home/home.service';
 import { CadastrarComponent } from './content/cadastrar/cadastrar.component';
-import { CadastrarService } from './services/cadastrar.service';
 import { MethodService } from './services/method.service';
 //import { CadastrarComponent } from './cadastrar/cadastrar.component';
 

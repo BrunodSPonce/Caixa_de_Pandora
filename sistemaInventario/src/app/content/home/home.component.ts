@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { HomeService } from './home.service';
 import { Servidor } from 'src/app/model/servidor.model';
 import { Router } from '@angular/router';
+import { MethodService } from 'src/app/services/method.service';
 
 /**
  * @title Table with pagination
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
   servidorId : any;
 
   constructor(
-    private homeService: HomeService,
+    private homeService: MethodService,
     private router: Router
   ){}
 
@@ -56,7 +57,7 @@ export class HomeComponent implements OnInit {
   dataSource = new MatTableDataSource<Servidor>();
   
   servidorPorId(){
-    this.homeService.servidorPorId(this.servidorId).subscribe(servidorId =>{
+    this.homeService.idServidor(this.servidorId).subscribe(servidorId =>{
       this.servidorId = servidorId;
     }, err =>{
       console.log('Não encontrado')
