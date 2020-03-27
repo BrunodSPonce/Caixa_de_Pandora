@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Unidas.Inventario.Application\Unidas.Inventario.Application.csproj" />
+    <ProjectReference Include="..\Unidas.Inventario.Infra.Data\Unidas.Inventario.Infra.Data.csproj" />
+    <ProjectReference Include="..\Unidas.Inventario.Infra.ExternalServices\Unidas.Inventario.Infra.ExternalServices.csproj" />
+  </ItemGroup>
+
+</Project>
