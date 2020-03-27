@@ -1,0 +1,31 @@
+<section class="container-fluid">    
+    <div class="form-group text-center">
+        <img src="./assets/download.png" alt="Unidas">
+    </div>   
+    
+    <div class="container col-sm-4">
+            <form [formGroup]="loginForm">
+                <!-- CAMPO DO USUARIO -->
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" formControlName="username" class="form-control" id="username" placeholder="Usuário" [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+                </div>
+
+                <!-- CAMPO DE SENHA -->
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" formControlName="password" class="form-control" id="password" placeholder="Senha" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                </div>
+                
+                <!-- BOTÃO DE AÇÃO -->
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-primary center-block" (click)="onSubmit()">Enviar</button>
+                </div>
+            </form>
+        <!-- LINK PARA RECUPERAR SENHA -->
+        <div class="form-group text-center">
+            <a routerLink="/recupera_senha">Esqueceu a senha?</a>
+        </div>  
+    </div>
+</section>
+

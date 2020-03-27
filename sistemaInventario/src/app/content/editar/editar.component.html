@@ -1,0 +1,178 @@
+<section class="container col-md-6">
+    <div>
+        <form [formGroup]="formServidor" (ngSubmit)="atualizarServidor()">
+            <!-- Grupo de dados referentes ao servidor -->
+            <div class="col-sm-12 border">
+                <legend>
+                    Servidor
+                </legend>
+                <!-- GRUPO 1 -->
+                <div class="form-group row">
+                    
+                    <div class="col">
+                        <label for="ip">IP</label>
+                        <input class="form-control" type="text" name="ip" id="ip" formControlName="ip"/>
+                    </div>
+
+                    <div class="col">
+                        <label for="hostname">Hostname</label>
+                        <input class="form-control" type="text" name="hostname" id="hostname" formControlName="hostname"/>
+
+                    </div>
+                    <div class="col">
+                        <label for="status">Status</label>
+                        <input class="form-control" type="text" name="status" id="status" formControlName="status"/>
+                    </div>
+                </div>
+
+                <!-- GRUPO 2 -->
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="cpu">CPU</label>
+                        <input class="form-control" type="text" name="cpu" id="cpu" formControlName="cpu">
+                    </div>
+
+                    <div class="col">
+                        <label for="memoria">Memória</label>
+                        <input class="form-control" type="text" name="memoria" id="memoria" formControlName="memoria">
+
+                    </div>
+                    <div class="col">
+                        <label for="espacoemdisco">Espaço em Disco</label>
+                        <input class="form-control" type="text" name="espacoemdisco" id="espacoemdisco" formControlName="espacoDisco">
+                    </div>
+                </div>
+
+                <!-- GRUPO 3 -->
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="conteudo">Conteúdo</label>
+                        <input class="form-control" type="text" name="conteudo" id="conteudo" formControlName="conteudo">
+                    </div>
+                    <div class="col">
+                        <label for="tipo">Tipo</label>
+                        <input class="form-control" type="text" name="tipo" id="tipo" formControlName="tipoServidor">
+                    </div>
+                </div>
+
+                <!-- GRUPO 4 -->
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="observacao">Observação</label>
+                        <input class="form-control" type="text" name="observacao" id="observacao" formControlName="observacao">
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRUPO DE DADOS REFERENTES AO SISTEMA OPERACIONAL -->
+            <div class="col-sm-12 border mt-3">
+                <legend>
+                    Sistema Operacional
+                </legend>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="soid">ID</label>
+                        <input class="form-control" type="text" name="soid" id="soid" formControlName="sistemaOperacionalID"/>
+                    </div>
+
+                    <div class="col">
+                        <label for="so">Sistema Operacional</label>
+                        <input class="form-control" type="text" name="so" id="so" formControlName="nomeSistemaOperacional">
+                    </div>
+
+                    <div class="col">
+                        <label for="versao">Versão</label>
+                        <input class="form-control" type="text" name="versao" id="versao" formControlName="versao">
+                    </div>
+                    <div class="col">
+                        <label for="distribuicao">Distribuição</label>
+                        <input class="form-control" type="text" name="distribuicao" id="distribuicao" formControlName="distribuicao">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GRUPO DE DADOS REFERENTES AO AMBIENTE E FINALIDADE -->
+            <div class="col-sm-12 border mt-3">
+                <legend>
+                    Ambiente e Finalidade
+                </legend>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="ambienteid">ID</label>
+                        <input class="form-control" type="text" name="ambienteid" id="ambienteid" formControlName="ambienteID"/>
+                    </div>
+
+                    <div class="col">
+                        <label for="ambiente">Ambiente</label>
+                        <input class="form-control" type="text" name="ambiente" id="ambiente" formControlName="nomeAmbiente">
+                    </div>
+                    <div class="col">
+                        <label for="finalidadeid">ID</label>
+                        <input class="form-control" type="text" name="finalidadeid" id="finalidadeid" formControlName="finalidadeID"/>
+                    </div>
+                    <div class="col">
+                        <label for="finalidade">Finalidade</label>
+                        <input class="form-control" type="text" name="finalidade" id="finalidade" formControlName="nomeFinalidade">
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- GRUPO DE DADOS REFERENTES A RESPONSABILIDADE E DATACENTER -->
+            <div class="col-sm-12 border mt-3">
+                <legend>
+                    Responsabilidade e Datacenter
+                </legend>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="responsabilidadeid">ID</label>
+                        <input class="form-control" type="text" name="responsabilidadeid" id="responsabilidadeid" formControlName="responsabilidadeID"/>
+                    </div>
+                    <div class="col">
+                        <label for="responsavel">Responsável</label>
+                        <input class="form-control" type="text" name="responsavel" id="responsavel" formControlName="nomeResponsabilidade">
+                    </div>
+                    <div class="col">
+                        <label for="datacenterid">ID</label>
+                        <input class="form-control" type="text" name="datacenterid" id="datacenterid" formControlName="datacenterID"/>
+                    </div>
+                    <div class="col">
+                        <label for="datacenter">Datacenter</label>
+                        <input class="form-control" type="text" name="datacenter" id="datacenter" formControlName="nomeDataCenter">
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRUPO DE DADOS REFERENTES AO BACKUP -->
+            <div class="col-sm-12 border mt-3">
+                <legend>
+                    Backup
+                </legend>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="idCategoriaBackup">ID</label>
+                        <input class="form-control" type="text" name="idCategoriaBackup" id="idCategoriaBackup" formControlName="categoriaBackupID"/>
+                    </div>
+                    <div class="col">
+                        <label for="tipo">Tipo</label>
+                        <input class="form-control" type="text" name="tipo" id="tipo" formControlName="nomeCategoriaBackup">
+                    </div>
+                    <div class="col">
+                        <label for="descricao">Descrição</label>
+                        <input class="form-control" type="text" name="descricao" id="descricao" formControlName="descricao">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GRUPO DE BOTÕES DE AÇÕES -->
+            <div class="nav justify-content-center p-2">
+                <div class="p-2">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+                <div class="p-2">
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

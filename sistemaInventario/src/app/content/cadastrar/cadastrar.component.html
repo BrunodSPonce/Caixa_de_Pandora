@@ -1,0 +1,207 @@
+<section class="container col-md-6">
+    <div>
+        <form method="POST" #frm="ngForm" (ngSubmit)="criar(servidor)">
+            <!-- Grupo de dados referentes ao servidor -->
+            <div class="col-sm-12 border">
+                <legend>
+                    Servidor
+                </legend>
+                <!-- GRUPO 1 -->
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="ip">IP</label>
+                        <input class="form-control" type="text" name="ip" id="ip"
+                        [(ngModel)]="cadastro.ip" required/>
+                    </div>
+
+                    <div class="col">
+                        <label for="hostname">Hostname</label>
+                        <input class="form-control" type="text" name="hostname" id="hostname"
+                        [(ngModel)]="cadastro.hostname" required/>
+
+                    </div>
+                    <div class="col">
+                        <label for="status">Status</label>
+                        <input class="form-control" type="text" name="status" id="status"
+                        [(ngModel)]="cadastro.status" required/>
+                     </div>
+                </div>
+
+                <!-- GRUPO 2 -->
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="cpu">CPU</label>
+                        <input class="form-control" type="text" name="cpu" id="cpu"
+                        [(ngModel)]="cadastro.cpu" required/>
+                    </div>
+
+                    <div class="col">
+                        <label for="memoria">Memória</label>
+                        <input class="form-control" type="text" name="memoria" id="memoria"
+                        [(ngModel)]="cadastro.memoria" required/>
+                    </div>
+
+                    <div class="col">
+                        <label for="espacoemdisco">Espaço em Disco</label>
+                        <input class="form-control" type="text" name="espacoemdisco" id="espacoemdisco"
+                        [(ngModel)]="cadastro.espacoDisco" required/>
+                        
+                    </div>
+                </div>
+
+                <!-- GRUPO 3 -->
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="conteudo">Conteúdo</label>
+                        <input class="form-control" type="text" name="conteudo" id="conteudo"
+                        [(ngModel)]="cadastro.conteudo" required/>
+                    </div>
+
+                    <div class="col">
+                        <label for="tipo">Tipo</label>
+                        <input class="form-control" type="text" name="tipo" id="tipo"
+                        [(ngModel)]="cadastro.tipoServidor" required/>
+                    </div>
+                </div>
+
+                <!-- GRUPO 4 -->
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="observacao">Observação</label>
+                        <input class="form-control" type="text" name="observacao" id="observacao"
+                        [(ngModel)]="cadastro.observacao" required/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRUPO DE DADOS REFERENTES AO SISTEMA OPERACIONAL -->
+            <div class="col-sm-12 border mt-3">
+                <legend>
+                    Sistema Operacional
+                </legend>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="inputSO">Sistema Operacional</label>
+                        <select id="inputSO" class="form-control" name="nomeSistemaOperacional" [(ngModel)]="cadastro.nomeSistemaOperacional" required>
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let sistemaOperacional of sistemasoperacionais">
+                                {{sistemaOperacional.nomeSistemaOperacional}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="inputVersao">Versão</label>
+                        <select id="inputVersao" class="form-control" name="versao" [(ngModel)]="cadastro.versao">
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let sistemaOperacional of sistemasoperacionais">
+                                {{sistemaOperacional.versao}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="inputDistribuicao">Distribuição</label>
+                        <select id="inputDistribuicao" class="form-control" name="distribuicao" [(ngModel)]="cadastro.distribuicao">
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let sistemaOperacional of sistemasoperacionais">
+                                {{sistemaOperacional.distribuicao}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRUPO DE DADOS REFERENTES AO AMBIENTE E FINALIDADE -->
+            <div class="col-sm-12 border mt-3">
+                <legend>
+                    Ambiente e Finalidade
+                </legend>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="inputAmbiente">Ambiente</label>
+                        <select id="inputAmbiente" class="form-control" name="nomeAmbiente" [(ngModel)]="cadastro.nomeAmbiente">
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let ambiente of ambientes">
+                                {{ambiente.nomeAmbiente}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="inputFinalidade">Finalidade</label>
+                        <select id="inputFinalidade" class="form-control" name="nomeFinalidade" [(ngModel)]="cadastro.nomeFinalidade">
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let finalidade of finalidades">
+                                {{finalidade.nomeFinalidade}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRUPO DE DADOS REFERENTES A RESPONSABILIDADE E DATACENTER -->
+            <div class="col-sm-12 border mt-3">
+                <legend>
+                    Responsabilidade e Datacenter
+                </legend>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="inputResponsavel">Responsável</label>
+                        <select id="inputResponsavel" class="form-control" name="nomeResponsabilidade" [(ngModel)]="cadastro.nomeResponsabilidade">
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let responsavel of responsaveis">
+                                {{responsavel.nomeResponsabildiade}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="inputDatacenter">Datacenter</label>
+                        <select id="inputDatacenter" class="form-control" name="nomeDataCenter" [(ngModel)]="cadastro.nomeDataCenter">
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let datacenter of datacenters">
+                                {{datacenter.nomeDataCenter}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRUPO DE DADOS REFERENTES AO BACKUP -->
+            <div class="col-sm-12 border mt-3">
+                <legend>
+                    Backup
+                </legend>
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="inputTipo">Tipo</label>
+                        <select id="inputTipo" class="form-control" name="nomeCategoriaBackup" [(ngModel)]="cadastro.nomeCategoriaBackup">
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let backup of backups">
+                                {{backup.nomeCategoriaBackup}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col">
+                        <label for="inputDescricao">Descrição</label>
+                        <select id="inputDescricao" class="form-control" name="descricao" [(ngModel)]="cadastro.descricao">
+                            <option selected>Choose...</option>
+                            <option *ngFor ="let backup of backups">
+                                {{backup.descricao}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRUPO DE BOTÕES DE AÇÕES -->
+            <div class="nav justify-content-center p-2">
+                <div class="p-2">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

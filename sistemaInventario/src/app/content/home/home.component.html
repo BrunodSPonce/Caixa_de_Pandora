@@ -1,0 +1,110 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Home</li>
+  </ol>
+</nav>
+
+<div class="col-sm-11">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Procurar">
+  </mat-form-field>
+</div>
+
+<div class="table-responsive">
+  <table mat-table [dataSource]="servidores" matSort>
+    <!--<ng-container matColumnDef="">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Editar </th>>
+      <td mat-cell *matCellDef="let servidor" (click)="edit(servidor.servidorID)"><img src="../../../assets/create-24px.svg" alt="Editar" title="Editar"></td>
+    </ng-container>-->
+
+    <ng-container matColumnDef="ip">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> IP </th>
+      <td mat-cell *matCellDef="let servidor" (click)="edit(servidor.servidorID)" title="Editar">{{servidor.ip}}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="hostname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Hostname </th>
+      <td mat-cell *matCellDef="let servidor"> {{servidor.hostname}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="observacao">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Observacao </th>
+      <td mat-cell *matCellDef="let servidor"> {{servidor.observacao}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let servidor"> {{servidor.status}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="tipoServidor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de Servidor </th>
+      <td mat-cell *matCellDef="let servidor"> {{servidor.tipoServidor}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="espacoDisco">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Espaco em Disco </th>
+      <td mat-cell *matCellDef="let servidor"> {{servidor.espacoDisco}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="cpu">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> CPU </th>
+      <td mat-cell *matCellDef="let servidor"> {{servidor.cpu}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="memoria">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Memoria </th>
+      <td mat-cell *matCellDef="let servidor"> {{servidor.memoria}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="conteudo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Conteudo </th>
+      <td mat-cell *matCellDef="let servidor"> {{servidor.conteudo}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+
+</div>
+  
+<!-- <h2>Servidores</h2>
+<table *ngFor = 'let servidor of servidores'>
+
+  <tr>
+    <th>#id</th>
+    <th>descricao</th>
+    <th>ip</th>
+    <th>ambiente</th>
+    <th>sistemaOperacional</th>
+  </tr>
+  <tr>
+    <td>{{servidor.id}}</td>
+    <td>{{servidor.descricao}}</td>
+    <td>{{servidor.ip}}</td>
+    <td>{{servidor.ambiente}}</td>
+    <td>{{servidor.sistemaOperacional}}</td>
+  </tr>
+
+</table>
+<table>
+
+  <tr>
+    <th>#id</th>
+    <th>descricao</th>
+    <th>ip</th>
+    <th>ambiente</th>
+    <th>sistemaOperacional</th>
+  </tr>
+  <tr>
+    <td>{{servidorId.id}}</td>
+    <td>{{servidorId.descricao}}</td>
+    <td>{{servidorId.ip}}</td>
+    <td>{{servidorId.ambiente}}</td>
+    <td>{{servidorId.sistemaOperacional}}</td>
+  </tr>
+
+</table> -->

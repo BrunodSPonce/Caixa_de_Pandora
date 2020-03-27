@@ -1,0 +1,13 @@
+nav{
+    background-color: rgb(0,79,153);
+    text-decoration: none;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color: white;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
